@@ -54,6 +54,6 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
-        $this -> MahasiswaModel = new \App\Models\MahasiswaModel();
+        $this->produkModel = new \App\Models\ProdukModel();
     }
 }
