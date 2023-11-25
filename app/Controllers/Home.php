@@ -4,37 +4,28 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+
     public function index(): string
     {
-        return view('welcome_message');
-    }
-    public function home(): string
-    {
-        $produk = $this->produkModel->getAllproduk();
+        $detail = $this->detailModel->getDetail();
         $data = [
-            "title" => "home",
-            "produk" => $produk
+            "tittle" => "Halaman Utama",
+            "data" => $detail
         ];
-        return view('home', $data);
+        return view('index', $data);
     }
-    public function input(): string
+
+    public function product(): string
     {
+        $detail = $this->detailModel->getDetail();
         $data = [
-            "title" => "input",
+            "data" => $detail
         ];
-        return view('create', $data);
+        return view('product', $data);
     }
-    public function create()
+
+    public function about(): string
     {
-        $nama = $this->request->getvar("nama");
-        $harga = $this->request->getVar("harga");
-        $deskripsi = $this->request->getVar("deskripsi");
-        $data = [
-            "nama"=> $nama,
-            "harga" => $harga,
-            "deskripsi" => $deskripsi
-            ];
-        $this->produkModel->create($data);
-        return redirect()->to(base_url());
+        return view('about');
     }
 }
