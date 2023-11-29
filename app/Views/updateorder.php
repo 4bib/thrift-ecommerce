@@ -1,42 +1,60 @@
 <?= $this->extend('/template') ?>
 <?= $this->section('content') ?>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="/updateaction" method="post">
-                        <input type="hidden" name="id" value="<?= $detail['id'] ?>">
-                        <input type="hidden" name="jumlahbefore" value="<?= $detail['jumlah'] ?>">
-                        <input type="hidden" name="hargabefore" value="<?= $detail['jumlahbiaya'] ?>">
 
-                        <div class="form-group">
-                            <br>
-                            <p>
-                                <?= $detail['nama'] ?>
-                            </p>
+                <form action="/updateaction" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<?= $detail['data']['id'] ?>">
+                        <input type="hidden" name="jumlahbefore" value="<?= $detail['data']['jumlah'] ?>">
+                        <input type="hidden" name="hargabefore" value="<?= $detail['data']['jumlahbiaya'] ?>">
 
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlah">Jumlah:</label>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah" required min="1"
-                                value="<?= $detail['jumlah'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="alamat">Alamat Pengiriman:</label>
-                            <textarea class="form-control" id="alamat" name="alamat" required style="resize: none;"><?= $detail['alamat'] ?></textarea>
+                        <?php
+                        $fields = [
+                            'jumlah' => 'Jumlah',
+                            'penerima' => 'Nama Penerima',
+                            'propinsi' => 'Propinsi',
+                            'kota' => 'Kota/Kabupaten',
+                            'kecamatan' => 'Kecamatan',
+                            'kodepos' => 'Kode Pos',
+                            'alamat' => 'Alamat',
+                        ];
 
-                        </div>
-
+                        foreach ($fields as $fieldName => $label): ?>
+                            <div class="form-group">
+                                <?php if ($fieldName === 'jumlah'): ?>
+                                    <label for="<?= $fieldName ?>">
+                                        <?= $label ?>:
+                                    </label>
+                                    <input type="number" class="form-control" id="<?= $fieldName ?>" name="<?= $fieldName ?>"
+                                        required min="1"
+                                        value="<?= old($fieldName) !== null ? old($fieldName) : (isset($detail['data'][$fieldName]) ? $detail['data'][$fieldName] : '') ?>">
+                                <?php else: ?>
+                                    <label for="<?= $fieldName ?>">
+                                        <?= $label ?>:
+                                    </label>
+                                    <input type="text"
+                                        class="form-control <?= $detail['validation'] !== null ? ($detail['validation']->hasError($fieldName) ? 'is-invalid' : '') : ''; ?>"
+                                        id="<?= $fieldName ?>" name="<?= $fieldName ?>"
+                                        value="<?= old($fieldName) !== null ? old($fieldName) : (isset($detail['data'][$fieldName]) ? $detail['data'][$fieldName] : '') ?>">
+                                    <div class="invalid-feedback">
+                                        <?= $detail['validation'] !== null ? $detail['validation']->getError($fieldName) : ''; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                        <br><br>
+                        <button type="submit" class="btn btn-primary col-md-6 mx-auto"
+                            style="background-color: #70b4bc;">Ubah</button>
+                        <br>
+                    </form>
 
                 </div>
-                <button type="submit" class="btn btn-primary col-md-6 mx-auto"
-                    style="background-color: #70b4bc;">Edit</button>
                 <br>
-                </form>
             </div>
-            <br>
         </div>
     </div>
-</div>
-<?= $this->endSection() ?>
+    <?= $this->endSection() ?>

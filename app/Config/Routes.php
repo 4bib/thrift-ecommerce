@@ -20,3 +20,6 @@ $routes->get('/orderlist', 'Order::orderlist');
 $routes->post('/updateproduct', 'Order::updateorder');
 $routes->post('/updateaction', 'Order::updateaction');
 $routes->post('/deleteproduct', 'Order::deleteorder');
+
+//bukti transaksi
+$routes->post('/uploadstruk', 'Order::uploadStruk');

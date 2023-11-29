@@ -8,7 +8,7 @@ class OrderModel extends Model
 {
     protected $table = 'order';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['nama', 'alamat', 'jumlah', 'id_product', 'jumlahbiaya'];
+    protected $allowedFields = ['nama', 'alamat', 'jumlah', 'id_product', 'jumlahbiaya', 'kodepos', 'kecamatan', 'kota', 'propinsi', 'penerima', 'bukti_pembayaran'];
     protected $useTimestamp = true;
 
     public function saveOrder($data)

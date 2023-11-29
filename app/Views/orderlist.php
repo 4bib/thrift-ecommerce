@@ -26,7 +26,7 @@
         <br><br>
         <?php if (session()->has('order_created')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Pesanan telah dibuat</strong> dan akan dikirimkan dalam 1x24 jam dengan metode pembayaran di tempat
+                <strong>Pesanan telah dibuat</strong> dan akan dikirimkan dalam 1x24 jam sesudah mengirim bukti pembayaran
             </div>
         <?php endif; ?>
 
@@ -38,13 +38,19 @@
 
         <?php if (session()->has('order_deleted')): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Pesanan dihapus</strong> Silakan checkout barang yang lain
+                <strong>Pesanan dihapus</strong> Silakan checkout Produk yang lain
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->has('image_problem')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Gambar mengandung konten berbahaya</strong> Pastikan mengupload sesuai format yang diizinkan
             </div>
         <?php endif; ?>
 
 
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-12">
                 <?php if (empty($data)): ?>
                     <p>Anda belum membuat pesanan, silahkan pilih produk dan lakukan pemesanan.</p>
@@ -54,7 +60,7 @@
                             <div class="col-md-8 mb-4 mx-auto">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Detail Pesanan</h5>
+                                        <h5 class="card-title">Detail Pemesanan</h5>
                                         <table>
                                             <tr>
                                                 <td>ID Produk</td>
@@ -63,7 +69,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Nama Barang</td>
+                                                <td>Nama Produk</td>
                                                 <td>:
                                                     <?= $order['nama'] ?>
                                                 </td>
@@ -75,9 +81,15 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>Nama Penerima</td>
+                                                <td>:
+                                                    <?= $order['penerima'] ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>Alamat Pengiriman</td>
                                                 <td>:
-                                                    <?= $order['alamat'] ?>
+                                                    <?= $order['alamat'] . ", " . $order['kecamatan'] . ", " . $order['kota'] . ", " . $order['propinsi'] . ", " . $order['kodepos'] ?>
                                                 </td>
                                             </tr>
                                             <?php if (isset($order['jumlahbiaya'])): ?>
@@ -88,8 +100,29 @@
                                                     </td>
                                                 </tr>
                                             <?php endif; ?>
-                                        </table>
+                                        
+                                            <tr>
+                                                <td style="vertical-align: top;"><label for="struk">Struk Pembayaran</label>
+                                                </td>
+                                                <td>:
+                                                    <?php if ($order['bukti_pembayaran'] != ''): ?>
+                                                        <a href="/Transaction/<?= $order['bukti_pembayaran'] ?>">Lihat Bukti Pembayaran</a>
+                                                    <?php else: ?>
+                                                        <!-- Tampilkan formulir pengiriman gambar jika tidak ada bukti pembayaran -->
+                                                        <strong>struk pembayaran belum diupload</strong><br>
+                                                        <form action="/uploadstruk" method="post"
+                                                            enctype="multipart/form-data">
+                                                            <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
+                                                            <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" required
+                                                                accept="image/*">
+                                                            <button type="submit" class="btn btn-primary">Kirim</button>
+                                                        </form>
+                                                    <?php endif; ?>
+                                                </td>
 
+                                            </tr>
+                                        </table>
+  
                                         <!-- Add Update and Delete buttons here -->
                                         <div class="mt-3">
                                             <form action="/updateproduct" method="post" class="d-inline">
@@ -99,8 +132,7 @@
                                             </form>
 
                                             <form action="/deleteproduct" method="post"
-                                                onsubmit="return confirm('Yakin mau hapus pesananmu?');"
-                                                class="d-inline">
+                                                onsubmit="return confirm('Yakin mau hapus pesananmu?');" class="d-inline">
                                                 <input name="id" type="hidden" value="<?= $order['id'] ?>">
                                                 <button class="btn btn-danger ml-2">Delete</button>
                                             </form>
