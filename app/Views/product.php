@@ -1,6 +1,6 @@
 <?= $this->extend('/template') ?>
 <?= $this->section('content') ?>
-<section class="furniture_section layout_padding">
+<section class="thrift_section layout_padding">
     <div class="container">
         <div class="row">
 

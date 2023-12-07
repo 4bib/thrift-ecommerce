@@ -132,7 +132,7 @@
                                             </form>
 
                                             <form action="/deleteproduct" method="post"
-                                                onsubmit="return confirm('Yakin mau hapus pesananmu?');" class="d-inline">
+                                                onsubmit="return confirm('Yakin hapus pesanan?');" class="d-inline">
                                                 <input name="id" type="hidden" value="<?= $order['id'] ?>">
                                                 <button class="btn btn-danger ml-2">Delete</button>
                                             </form>
