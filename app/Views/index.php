@@ -10,16 +10,17 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h2>
                                         Thrifting trendi untuk Anda
-                                    </h1>
+                                    </h2>
                                     <p>
-                                        Tersedia thrift adidas, balenciaga, burberry dan masih banyak lagi
+                                        Tersedia thrift adidas, balenciaga, burberry dan lainnya.
                                     </p>
                                     <div class="btn-box">
                                         <a href="/product" class="btn1">
                                             Mulai Belanja
                                         </a>
+                                        &nbsp;&nbsp;
                                         <a href="/about" class="btn2">
                                             Tentang Kami
                                         </a>
